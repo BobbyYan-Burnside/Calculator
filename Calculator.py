@@ -46,14 +46,34 @@ class Calculator:
 
 
     def create_button(self, text, row, column):
-            btnWidget = Button(self.WidgetFrame, text=text, width =6, height=2, bd=4 , bg='powder blue', font =('arial', 20, 'bold'))
+            btnWidget = Button(self.WidgetFrame, text=text, width =6, height=2, bd=4 , bg='powder blue', font =('arial', 20, 'bold'),
+                               command =lambda: self.button_click(text))
             btnWidget.grid(row =row, column =column , padx=5, pady =5)
+
+    def button_click(self, text): 
+        
+        if text == "←":
+             self.input_button = self.input_button[:-1]
+        elif text == "CE":
+             self.input_button=""
+        elif text == "C":
+             self.input_button =""
+        
+        elif text == "=":
+           try:
+               self.input_button = str(eval(self.input_button))
+           except:
+               self.input_button ="Error"
+        elif text == "±":
+             self.input_button =str(float(self.input_button))
+        else:
+             self.input_button += text
+             
+        self.lbDisplay.config(text = self.input_button)
+
 
 
 
 root = Tk()
 App = Calculator(root)
 root.mainloop()
-
-
-
